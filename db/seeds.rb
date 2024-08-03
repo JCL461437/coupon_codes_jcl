@@ -27,8 +27,9 @@ merchant15 = Merchant.where(id: 15)
 
 puts "Merchants established for coupon creation."
 
-coupon1 = Coupon.create(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, merchant: merchant )
-coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", percent_off: 0.05, merchant: merchant )
+coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: merchant )
+coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: merchant )
+coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: merchant )
 # coupon3 =
 # coupon4 =
 # coupon5 =

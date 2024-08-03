@@ -1,0 +1,22 @@
+<%= render partial: "shared/nav" %>
+
+<div class="row">
+  <div class="col-sm-6 column-header">
+    <h2 class='mr-auto'> Coupon Index</h2>
+  </div>
+</div>
+
+<div class="mr-auto col-sm-6 column-header">
+  <ul>
+    <% @coupons.each do |coupon| %>
+      <section id="coupon-<%= coupon.id %>">
+          <li> 
+            <p> <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %> </p>
+            <p> Dollar off <%= coupon.dollar_off %> </p>
+            <p> Percent off <%= coupon.percent_off %> </p>
+          </li>
+      </section>
+    <% end %>
+  </ul>
+</div>
+
