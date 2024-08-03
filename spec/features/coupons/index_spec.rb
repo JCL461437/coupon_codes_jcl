@@ -60,6 +60,11 @@ describe "merchant coupons index" do
     click_link "View All Merchant Coupons"
 
     expect(page).to have_current_path(merchant_coupons_path(@merchant1))
+
+    expect(page).to have_content("#{@merchant1.name}")
+    expect(page).to have_content("#{@coupon1.name}")
+    expect(page).to have_content("Dollar off #{@coupon1.dollar dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon1.dollar dollar_off}")
   end
 
   xit "for each coupon name there is a link to the merchant coupons page" do
