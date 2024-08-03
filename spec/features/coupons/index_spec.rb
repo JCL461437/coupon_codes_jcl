@@ -1,4 +1,4 @@
-equire "rails_helper"
+require "rails_helper"
 
 describe "merchant coupons index" do
   before :each do
@@ -52,12 +52,12 @@ describe "merchant coupons index" do
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
   end
 
-  it "can see all the coupons that correspond to a merchant on that merchants dashboard page" do
-    visit merchant_dashboard_path(@merchant1)
+  it "can see a link to merchant coupons index page that will bring me to merchant_coupons_path" do
+    visit merchant_dashboard_index_path(@merchant1)
 
-    expect(page).to have_content("View all Merchants Coupons")
+    expect(page).to have_content("View All Merchants Coupons")
     
-    click_link "View All Merchants Coupons"
+    click_link "View All Merchant Coupons"
 
     expect(page).to have_current_path(merchant_coupons_path(@merchant1))
   end
