@@ -37,11 +37,11 @@ FactoryBot.define do
     invoice
   end
 
-  factory :coupon do
-    name {Faker::Name.first_name}
-    unique_code {Faker::IdNumber.croatian_id(international: true)} #=> "HR88467617508"
-    percent_off Faker::Number.decimal(l_digits: 4) # 0.9999 is 99.99% off in conversion so it should be highest value some one can get off
-    dollar_off {Faker::Number.decimal} # in cents
-    merchant
-  end
+  # factory :coupon do
+  #   name {Faker::Name.first_name}
+  #   unique_code {Faker::IdNumber.croatian_id(international: true)} #=> "HR88467617508"
+  #   percent_off {Faker::Number.decimal(l_digits: 4)} # 0.9999 is 99.99% off in conversion so it should be highest value some one can get off
+  #   dollar_off {Faker::Number.decimal} # in cents
+  #   merchant
+  # end
 end
