@@ -1,8 +1,8 @@
 class Coupon < ApplicationRecord
   validates_presence_of :name
-                        # :percent_off,
-                        # :dollar_off,
-                        # :unique_code
+                        # :percent_off, { unless: :dollar_off }
+                        # :dollar_off, { unless: :percent_off }
+                        # :unique_code 
   validates_numericality_of :percent_off
   validates_numericality_of :dollar_off
   validates_uniqueness_of :unique_code
