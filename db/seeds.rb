@@ -26,36 +26,36 @@ merchant15 = Merchant.where(id: 15)
 
 puts "Merchants established for coupon creation."
 
-coupon1 = merchant1.coupons.create(name: "Five Dollars Off!", unique_code: "A238HFSD82")
-coupon2 = 
-coupon3 =
-coupon4 =
-coupon5 =
-coupon6 =
-coupon7 =
-coupon8 = 
-coupon9 =
-coupon10 =
-coupon11 =
-coupon12 =
-coupon13 =
-coupon14 =
-coupon15 =
-coupon16 = 
-coupon17 =
-coupon18 =
-coupon19 =
-coupon20 =
-coupon21 =
-coupon22 =
-coupon23 =
-coupon24 =
-coupon25 =
-coupon26 =
-coupon27 =
-coupon28 =
-coupon29 =
-coupon30 =
+coupon1 = Coupon.create(name: "Five Dollars Off!", unique_code: "A238HFSD82", percent_off: 0, merchant: merchant1 )
+coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", percent_off: 0, merchant: merchant1 )
+# coupon3 =
+# coupon4 =
+# coupon5 =
+# coupon6 =
+# coupon7 =
+# coupon8 = 
+# coupon9 =
+# coupon10 =
+# coupon11 =
+# coupon12 =
+# coupon13 =
+# coupon14 =
+# coupon15 =
+# coupon16 = 
+# coupon17 =
+# coupon18 =
+# coupon19 =
+# coupon20 =
+# coupon21 =
+# coupon22 =
+# coupon23 =
+# coupon24 =
+# coupon25 =
+# coupon26 =
+# coupon27 =
+# coupon28 =
+# coupon29 =
+# coupon30 =
 
 puts "Invoices established for coupon creation."
 
