@@ -8,6 +8,7 @@
 
 Rake::Task["csv_load:all"].invoke
 
+merchant = Merchant.create(name: "Craig Jones")
 merchant1 = Merchant.where(id: 1)
 merchant2 = Merchant.where(id: 2)
 merchant3 = Merchant.where(id: 3)
@@ -26,8 +27,8 @@ merchant15 = Merchant.where(id: 15)
 
 puts "Merchants established for coupon creation."
 
-coupon1 = Coupon.create(name: "Five Dollars Off!", unique_code: "A238HFSD82", percent_off: 0, merchant: merchant1 )
-coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", percent_off: 0, merchant: merchant1 )
+coupon1 = Coupon.create(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, merchant: merchant )
+coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", percent_off: 0.05, merchant: merchant )
 # coupon3 =
 # coupon4 =
 # coupon5 =
@@ -57,7 +58,7 @@ coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", pe
 # coupon29 =
 # coupon30 =
 
-puts "Invoices established for coupon creation."
+# puts "Invoices established for coupon creation."
 
 
 puts "Successfully Seeded"
