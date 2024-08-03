@@ -21,11 +21,12 @@ class CouponsController < ApplicationController
       dollar_off: params[:dollar_off],
       percent_off: params[:percent_off],
       merchant: @merchant)
+      flash.notice = 'Coupon has been created!'
       redirect_to merchant_coupons_path(@merchant)
     elsif params[:dollar_off].present? && params[:percent_off].present?
-      
+      flash.notice = "You may only enter a value for either dollar off or percent off."
     else 
-
+      flash.notice = "You cannot leave that field blank. Try again."
     end
   end
 end
