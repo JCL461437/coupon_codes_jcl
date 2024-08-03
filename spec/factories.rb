@@ -7,6 +7,7 @@ FactoryBot.define do
   factory :invoice do
     status {[0,1,2].sample}
     customer
+    coupon
   end
 
   factory :merchant do
@@ -34,5 +35,13 @@ FactoryBot.define do
     quantity { 1 }
     item
     invoice
+  end
+
+  factory :coupon do
+    name
+    unique_code
+    percent_off
+    dollar_off
+    merchant
   end
 end
