@@ -7,3 +7,57 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 Rake::Task["csv_load:all"].invoke
+
+merchant1 = Merchant.where(id: 1)
+merchant2 = Merchant.where(id: 2)
+merchant3 = Merchant.where(id: 3)
+merchant4 = Merchant.where(id: 4)
+merchant5 = Merchant.where(id: 5)
+merchant6 = Merchant.where(id: 6)
+merchant7 = Merchant.where(id: 7)
+merchant8 = Merchant.where(id: 8)
+merchant9 = Merchant.where(id: 9)
+merchant10 = Merchant.where(id: 10)
+merchant11 = Merchant.where(id: 11)
+merchant12 = Merchant.where(id: 12)
+merchant13 = Merchant.where(id: 13)
+merchant14 = Merchant.where(id: 14)
+merchant15 = Merchant.where(id: 15)
+
+puts "Merchants established for coupon creation."
+
+coupon1 = merchant1.coupons.create(name: "Five Dollars Off!", unique_code: "A238HFSD82")
+coupon2 = 
+coupon3 =
+coupon4 =
+coupon5 =
+coupon6 =
+coupon7 =
+coupon8 = 
+coupon9 =
+coupon10 =
+coupon11 =
+coupon12 =
+coupon13 =
+coupon14 =
+coupon15 =
+coupon16 = 
+coupon17 =
+coupon18 =
+coupon19 =
+coupon20 =
+coupon21 =
+coupon22 =
+coupon23 =
+coupon24 =
+coupon25 =
+coupon26 =
+coupon27 =
+coupon28 =
+coupon29 =
+coupon30 =
+
+puts "Invoices established for coupon creation."
+
+
+puts "Successfully Seeded"
