@@ -8,5 +8,5 @@ class Coupon < ApplicationRecord
   validates_uniqueness_of :unique_code
 
   belongs_to :merchant
-  has_many :invoices, #optional: true
+  has_many :invoices #optional: true
 end
