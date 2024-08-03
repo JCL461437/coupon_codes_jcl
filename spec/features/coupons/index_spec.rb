@@ -78,21 +78,24 @@ describe "merchant coupons index" do
     
   end
 
-  xit "for each coupon name there is a link to the merchant coupons page" do
-    visit merchant_invoices_path(@merchant1)
+  it "when I click the name of coupon on my merchant coupon index page, then I am taken to that coupons show page" do
+    visit merchant_coupons_path(@merchant1)
 
-    expect(page).to have_link("#{@invoice_1.id}")
-    expect(page).to have_link("#{@invoice_2.id}")
-    expect(page).to have_link("#{@invoice_3.id}")
-    expect(page).to have_link("#{@invoice_4.id}")
-    expect(page).to have_link("#{@invoice_5.id}")
-    expect(page).to have_link("#{@invoice_6.id}")
-    expect(page).to have_link("#{@invoice_7.id}")
-    expect(page).to_not have_link("#{@invoice_8.id}")
+    expect(page).to have_content("#{@merchant1.name}")
+    expect(page).to have_content("#{@coupon1.name}")
+    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
+    expect(page).to have_content("#{@coupon2.name}")
+    expect(page).to have_content("Dollar off #{@coupon2.dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon2.percent_off}")
 
-    click_link "#{@invoice_1.id}"
+    click_link "#{@coupon1.name}"
 
-    expect(current_path).to eq(merchant_invoice_path(@merchant1, @invoice_1))
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
+
+    expect(page).to have_content("#{@coupon1.name}")
+    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
   end
 
 end
