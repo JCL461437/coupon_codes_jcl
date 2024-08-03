@@ -51,9 +51,9 @@ describe "merchant coupons index" do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
 
-    @coupon1 = Coupon.create(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, merchant: @merchant1 )
-    @coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", percent_off: 0.05, merchant: @merchant1 )
-    @coupon3 = Coupon.create(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, merchant: @merchant2 )
+    @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: @merchant1 )
+    @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
+    @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
   end
 
   it "can see a link to merchant coupons index page that will bring me to merchant_coupons_path" do
