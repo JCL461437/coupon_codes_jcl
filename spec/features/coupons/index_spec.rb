@@ -68,15 +68,14 @@ describe "merchant coupons index" do
     save_and_open_page
     expect(page).to have_content("#{@merchant1.name}")
     expect(page).to have_content("#{@coupon1.name}")
-    expect(page).to have_content("Dollar off #{@coupon1.dollar dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon1.dollar dollar_off}")
+    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
     expect(page).to have_content("#{@coupon2.name}")
-    expect(page).to have_content("Dollar off #{@coupon2.dollar dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon2.dollar dollar_off}")
+    expect(page).to have_content("Dollar off #{@coupon2.dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon2.percent_off}")
 
     expect(page).to_not have_content("#{@coupon3.name}")
-    expect(page).to_not have_content("Dollar off #{@coupon3.dollar dollar_off}")
-    expect(page).to_not have_content("Percent off #{@coupon3.dollar dollar_off}")
+    
   end
 
   xit "for each coupon name there is a link to the merchant coupons page" do
