@@ -93,7 +93,7 @@ describe "merchant coupons index" do
 
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
 
-    expect(page).to have_content("#{@coupon1.name}")
+    expect(page).to have_content("__#{@coupon1.name}__")
     expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
     expect(page).to have_content("Percent off #{@coupon1.percent_off}")
   end
