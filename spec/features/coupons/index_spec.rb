@@ -50,6 +50,10 @@ describe "merchant coupons index" do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
+    @coupon1 = Coupon.create(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, merchant: @merchant1 )
+    @coupon2 = Coupon.create(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", percent_off: 0.05, merchant: @merchant1 )
+    @coupon3 = Coupon.create(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, merchant: @merchant2 )
   end
 
   it "can see a link to merchant coupons index page that will bring me to merchant_coupons_path" do
@@ -65,6 +69,13 @@ describe "merchant coupons index" do
     expect(page).to have_content("#{@coupon1.name}")
     expect(page).to have_content("Dollar off #{@coupon1.dollar dollar_off}")
     expect(page).to have_content("Percent off #{@coupon1.dollar dollar_off}")
+    expect(page).to have_content("#{@coupon2.name}")
+    expect(page).to have_content("Dollar off #{@coupon2.dollar dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon2.dollar dollar_off}")
+
+    expect(page).to_not have_content("#{@coupon3.name}")
+    expect(page).to_not have_content("Dollar off #{@coupon3.dollar dollar_off}")
+    expect(page).to_not have_content("Percent off #{@coupon3.dollar dollar_off}")
   end
 
   xit "for each coupon name there is a link to the merchant coupons page" do
