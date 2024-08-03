@@ -59,12 +59,13 @@ describe "merchant coupons index" do
   it "can see a link to merchant coupons index page that will bring me to merchant_coupons_path" do
     visit merchant_dashboard_index_path(@merchant1)
 
-    expect(page).to have_content("View All Merchants Coupons")
+    expect(page).to have_content("View All Merchant Coupons")
     
     click_link "View All Merchant Coupons"
 
     expect(page).to have_current_path(merchant_coupons_path(@merchant1))
 
+    save_and_open_page
     expect(page).to have_content("#{@merchant1.name}")
     expect(page).to have_content("#{@coupon1.name}")
     expect(page).to have_content("Dollar off #{@coupon1.dollar dollar_off}")
