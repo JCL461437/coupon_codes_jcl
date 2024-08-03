@@ -1,0 +1,17 @@
+<%= render partial: "shared/nav" %>
+
+<div class="row">
+  <div class="col-sm-6 column-header">
+    <h2 class='mr-auto'> Coupon Information</h2>
+  </div>
+</div>
+
+<div class="mr-auto col-sm-6 column-header">
+  <ul>
+      <li> 
+        <h2>__<%= {coupon.name} %>__</h2>
+        <p> Dollar off <%= coupon.dollar_off %> </p>
+        <p> Percent off <%= coupon.percent_off %> </p>
+      </li>
+  </ul>
+</div>
