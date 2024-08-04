@@ -26,6 +26,10 @@ RSpec.describe Coupon, type: :model do
     @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: @merchant1 )
     @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
+    @coupon4 = Coupon.create!(name: "Five Percent Off!", unique_code: "SKLGSKD4", dollar_off: 0, percent_off: 0.05, status: 0, merchant: @merchant2 )
+    @coupon5 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "92KS84JG", dollar_off: 2000, percent_off: 0, status: 0, merchant: @merchant1 )
+    @coupon6 = Coupon.create!(name: "Ten Percent Off!", unique_code: "JFKS9182", dollar_off: 0, percent_off: 0.10, status: 0, merchant: @merchant1 )
+    @coupon7 = Coupon.create!(name: "Thirty Dollars Off!", unique_code: "FS56SFJ6", dollar_off: 3000, percent_off: 0, status: 0, merchant: @merchant2 )
     
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
     @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 1, created_at: "2012-03-28 14:54:09", coupon: @coupon1 )
