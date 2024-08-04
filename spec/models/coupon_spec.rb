@@ -28,12 +28,12 @@ RSpec.describe Coupon, type: :model do
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
     
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09")
+    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 1, created_at: "2012-03-28 14:54:09", coupon: @coupon1 )
     @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon: @coupon1 )
     @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon: @coupon1 )
     @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
-    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 3, coupon: @coupon1 )
+    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1, coupon: @coupon1 )
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
@@ -85,8 +85,9 @@ RSpec.describe Coupon, type: :model do
     describe "instance methods" do
       describe ":times_used"
         it "should return the number of times a coupon was used for only successful transactions" do
-          # should only return three successful transactions, due to the associations between invoices who status must be completed, and transactiosn whose result must be success
-          expect(@coupon1.times_used).to eq(3) # pluck array would return "success" three times in array, but counts the number of this
+          # should only return two successful transactions, due to the associations between invoices who status must be completed, 
+          # and transactiosn whose result must be success. Even though their are three coupons one is associated to invoice that is not completed
+          expect(@coupon1.times_used).to eq(2) # pluck array would return "success" two times in array, but counts the number of this
         end
     end
   end
