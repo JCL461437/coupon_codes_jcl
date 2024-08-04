@@ -1,8 +1,7 @@
-require 'rails_helper'
-RSpec.describe Coupon, type: :model do
-  before (:each) do 
-    @merchant = Merchant.create(name: "Craig Jones")
+require "rails_helper"
 
+RSpec.describe "merchant coupons show" do
+  before :each do
     @merchant1 = Merchant.create!(name: "Hair Care")
     @merchant2 = Merchant.create!(name: "Jewelry")
 
@@ -28,12 +27,12 @@ RSpec.describe Coupon, type: :model do
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
     
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 1, created_at: "2012-03-28 14:54:09", coupon: @coupon1 )
+    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon: @coupon1)
     @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon: @coupon1 )
     @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon: @coupon1 )
     @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
-    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1, coupon: @coupon1 )
+    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
@@ -55,40 +54,23 @@ RSpec.describe Coupon, type: :model do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+
   end
 
-  describe "validations" do
-    subject { Coupon.create(name: "Test Coupon", unique_code: "B1290SA8S2", percent_off: 0) }
-    it { should validate_presence_of :name }
-    
-    it { should validate_numericality_of :dollar_off }
-    it { should validate_numericality_of :percent_off }
+  it "I see the coupons name, code, dollar/percentage off, status, and how many times the coupon has been used. " do
+    visit merchant_coupon_path(@merchant1, @coupon1)
 
-    it { should validate_uniqueness_of :unique_code }
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
 
-    it { should validate_presence_of :percent_off }
-    it { should validate_presence_of :dollar_off }
-    it { should validate_presence_of :unique_code }
-    it { should validate_presence_of :status}
+    expect(page).to have_content("__#{@coupon1.name}__")
+    expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
+    expect(page).to have_content("Coupon Status: #{@coupon1.status}")
+    expect(page).to have_content("Times Used: #{@coupon1.times_used}")
+
+    expect(page).to_not have_content("__#{@coupon2.name}__")
+    expect(page).to_not have_content("Coupon Status: #{@coupon2.unique_code}")
   end
 
-  describe "relationships" do
-    it { should have_many :invoices }
-    it { should belong_to :merchant }
-  end
-  
-  describe "model methods" do
-    describe "class methods" do
-
-    end
-
-    describe "instance methods" do
-      describe ":times_used"
-        it "should return the number of times a coupon was used for only successful transactions" do
-          # should only return two successful transactions, due to the associations between invoices who status must be completed, 
-          # and transactiosn whose result must be success. Even though their are three coupons one is associated to invoice that is not completed
-          expect(@coupon1.times_used).to eq(2) # pluck array would return "success" two times in array, but counts the number of this
-        end
-    end
-  end
 end
