@@ -15,4 +15,8 @@ class Coupon < ApplicationRecord
     inactive: 0,
     active: 1,
   }
+
+  def times_used 
+    self.transactions.where("result = ?", 1)
+  end
 end
