@@ -61,10 +61,10 @@ RSpec.describe "merchant coupons show" do
     visit merchant_coupon_path(@merchant1, @coupon1)
 
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
-
+    save_and_open_page
     expect(page).to have_content("__#{@coupon1.name}__")
     expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
-    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
     expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
     expect(page).to have_content("Coupon Status: #{@coupon1.status}")
     expect(page).to have_content("Times Used: #{@coupon1.percent_off}")
