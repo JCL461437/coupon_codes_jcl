@@ -17,6 +17,7 @@ class Coupon < ApplicationRecord
   }
 
   def times_used 
-    self.transactions.where("result = ?", 1)
+    self.invoices.joins(invoices: :transactions) # find invoices for a coupon, then join the transaction table through invoices, and find the coupons who have invoices who have transactions with a successful transaction
+                  .where("result = ?", 1)
   end
 end
