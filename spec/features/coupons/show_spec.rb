@@ -27,12 +27,12 @@ RSpec.describe "merchant coupons show" do
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
     
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09")
+    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon: @coupon1)
     @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon: @coupon1 )
     @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon: @coupon1 )
     @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
-    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 3, coupon: @coupon1 )
+    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 3)
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
