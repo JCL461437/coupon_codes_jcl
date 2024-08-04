@@ -21,7 +21,7 @@ class CouponsController < ApplicationController
     #elsif #pass param of unique code into method to query db and make sure it is unique
       #flash.notice = "That code is already assigned to a coupon. Enter a different code."
     else 
-      if params[:dollar_off].empty?
+      if params[:dollar_off].blank? # use blank instead of empty due to nature of empty checking array/hash while blank will more accuratley test this
         Coupon.create!(name: params[:name],
         unique_code: params[:unique_code],
         dollar_off: 0,
@@ -29,7 +29,7 @@ class CouponsController < ApplicationController
         merchant: @merchant)
         flash.notice = 'Coupon has been created!'
         redirect_to merchant_coupons_path(@merchant)
-      elsif params[:percent_off].empty?
+      elsif params[:percent_off].blank?
         Coupon.create!(name: params[:name],
         unique_code: params[:unique_code],
         dollar_off: params[:dollar_off],
