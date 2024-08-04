@@ -69,10 +69,15 @@ describe "merchant coupons new" do
     fill_in "Unique Code", with: "091JF8YMA1"
     fill_in "Dollar Off", with: "2000"
     
-    check "On call"
-
     click_button "Submit"
 
-    expect(page).to_not have_content("#{@coupon3.name}")
+    expect(page).to have_current_path(merchant_coupons_path(@merchant1))
+
+    last_coupon = Coupon.last
     
+    expect(page).to have_content("#{@merchant1.name}")
+    expect(page).to have_content("#{@coupon1.name}")
+    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
+
   end
