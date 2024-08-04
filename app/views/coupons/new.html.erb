@@ -1,0 +1,22 @@
+<h1>New Coupon</h1>
+<div id="new-coupon">
+  <%= form_with url: new_merchant_coupon_path(@merchant), method: :post, local: true do |form|%>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+    <br> 
+    <%= form.label :unique_code %>
+    <%= form.text_field :unique_code %>
+
+    <br> 
+    <%= form.label :dollar_off %>
+    <%= form.number_field :dollar_off %>
+
+    <br> 
+    <%= form.label :percent_off %>
+    <%= form.text_field :percentage_off %>
+
+    <br> 
+    <%= form.submit "Submit Application" %>
+  <% end %>
+</div>
