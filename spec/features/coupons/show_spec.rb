@@ -32,7 +32,7 @@ RSpec.describe "merchant coupons show" do
     @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon: @coupon1 )
     @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
-    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 3)
+    @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 1)
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
@@ -55,28 +55,6 @@ RSpec.describe "merchant coupons show" do
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
 
-  end
-
-  xit "can see a link to merchant coupons index page that will bring me to merchant_coupons_path" do
-    visit merchant_dashboard_index_path(@merchant1)
-
-    expect(page).to have_content("View All Merchant Coupons")
-    
-    click_link "View All Merchant Coupons"
-
-    expect(page).to have_current_path(merchant_coupons_path(@merchant1))
-
-
-    expect(page).to have_content("#{@merchant1.name}")
-    expect(page).to have_content("#{@coupon1.name}")
-    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
-    expect(page).to have_content("#{@coupon2.name}")
-    expect(page).to have_content("Dollar off #{@coupon2.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon2.percent_off}")
-
-    expect(page).to_not have_content("#{@coupon3.name}")
-    
   end
 
   it "I see the coupons name, code, dollar/percentage off, status, and how many times the coupon has been used. " do
