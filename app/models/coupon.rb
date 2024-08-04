@@ -20,4 +20,13 @@ class Coupon < ApplicationRecord
     self.invoices.where("status = ?", 2).joins(:transactions) # find invoices for a coupon where the invoices status is completed, then join the transaction table through invoices, and find the coupons who have invoices who have transactions with a successful transaction
                   .where("result = ?", 1).pluck(:result).count # pluck the results where the result are equal to a success and then count the array
   end
+
+
+  def deactivated_coupons
+    self.where(status: 0)
+  end
+
+  def activated_coupons
+    self.where(status: 1)
+  end
 end
