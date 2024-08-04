@@ -2,11 +2,10 @@
 
 <div class="row">
   <div class="col-sm-6 column-header">
-    <h2 class='mr-auto'> Coupon New</h2>
   </div>
 </div>
 
-<h1>New Coupon</h1>
+<h2>New Coupon</h2>
 <div id="new-coupon">
   <%= form_with url: merchant_coupons_path(@merchant), method: :post, local: true do |form|%>
     <%= form.label :name %>
