@@ -81,3 +81,5 @@ describe "merchant coupons new" do
     expect(page).to have_content("Percent off #{last_coupon.percent_off}")
 
   end
+
+end
