@@ -65,8 +65,10 @@ describe "merchant coupons new" do
 
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
 
+    unique_code = Faker::Number.hexadecimal(digits: 8)
+    
     fill_in :name, with: "Twenty Dollars Off"
-    fill_in :unique_code, with: "091JF8YMA1"
+    fill_in :unique_code, with: unique_code
     fill_in :dollar_off, with: "2000"
     
     click_button "Submit"
