@@ -74,10 +74,10 @@ describe "merchant coupons new" do
     expect(page).to have_current_path(merchant_coupons_path(@merchant1))
 
     last_coupon = Coupon.last
-    
-    expect(page).to have_content("#{@merchant1.name}")
-    expect(page).to have_content("#{@coupon1.name}")
-    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
+
+    expect(page).to have_content("#{@merchant.name}")
+    expect(page).to have_content("#{last_coupon.name}")
+    expect(page).to have_content("Dollar off #{last_coupon.dollar_off}")
+    expect(page).to have_content("Percent off #{last_coupon.percent_off}")
 
   end
