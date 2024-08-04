@@ -21,7 +21,7 @@ class CouponsController < ApplicationController
     elsif params[:dollar_off].blank? && params[:percent_off].blank?
       flash.notice = "You must ennter a value for either the dollar off or percent off fields. Try again."
       render :new
-    elsif @coupon.valid?
+    elsif 
       # use blank instead of empty due to nature of empty checking array/hash while blank will more accuratley test this
       if params[:dollar_off].blank?
         Coupon.create!(name: params[:name],
@@ -29,20 +29,15 @@ class CouponsController < ApplicationController
         dollar_off: 0,
         percent_off: params[:percent_off],
         merchant: @merchant)
-        flash.notice = 'Coupon has been created!'
-        redirect_to merchant_coupons_path(@merchant)
       elsif params[:percent_off].blank?
         Coupon.create!(name: params[:name],
         unique_code: params[:unique_code],
         dollar_off: params[:dollar_off],
         percent_off: 0,
         merchant: @merchant)
-        flash.notice = 'Coupon has been created!'
-        redirect_to merchant_coupons_path(@merchant)
       end
       redirect_to merchant_coupons_path(@merchant)
       flash.notice = 'Coupon has been created!'
-      render :new
     else 
       flash.notice = "That code is already assigned to a coupon. Enter a different code."
       render :new
