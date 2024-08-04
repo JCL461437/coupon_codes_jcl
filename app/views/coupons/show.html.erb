@@ -11,7 +11,7 @@
       <li> 
         <h2>__<%= @coupon.name %>__</h2>
         <p> Coupon Code <%= @coupon.unique_code %> </p>
-        <p> Dollar off $<%= @coupon.dollar_off/100 %> </p>
+        <p> Dollar off $<%= @coupon.dollar_off/10 %> </p>
         <p> Percent off <%= @coupon.percent_off*10 %> % </p>
         <p> Coupon Status: <%= @coupon.status %> </p>
         <p> Times Used: <%= @times_coupon_used %> </p>
