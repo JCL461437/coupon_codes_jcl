@@ -16,11 +16,11 @@ class CouponsController < ApplicationController
   def create
     @merchant = Merchant.find(params[:merchant_id])
     if params[:dollar_off].present? && params[:percent_off].present? # If user has filled information for both the dollar and percet columns it will not create a coupon and prompt them to do it again
-      flash.notice = "You may only enter a value for either dollar off or percent off."
       render :new
+      flash.alert = "You may only enter a value for either dollar off or percent off."
     elsif params[:dollar_off].blank? && params[:percent_off].blank?
-      flash.notice = "You must ennter a value for either the dollar off or percent off fields. Try again."
       render :new
+      flash.alert = "You must ennter a value for either the dollar off or percent off fields. Try again."
     elsif 
       # use blank instead of empty due to nature of empty checking array/hash while blank will more accuratley test this
       if params[:dollar_off].blank?
@@ -39,8 +39,7 @@ class CouponsController < ApplicationController
       redirect_to merchant_coupons_path(@merchant)
       flash.notice = 'Coupon has been created!'
     else 
-      flash.notice = "That code is already assigned to a coupon. Enter a different code."
-      render :new
+      flash.alert = "That code is already assigned to a coupon. Enter a different code."
     end
   end
 end
