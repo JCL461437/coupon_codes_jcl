@@ -15,11 +15,12 @@ class CouponsController < ApplicationController
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    @coupon = Coupon.create!(name: params[:name],
+    @coupon = Coupon.new(name: params[:name],
                       unique_code: params[:unique_code],
                       dollar_off: params[:dollar_off],
                       percent_off: params[:percent_off],
                       merchant: @merchant)
+    binding.pry
     if params[:dollar_off].present? && params[:percent_off].present? # If user has filled information for both the dollar and percet columns it will not create a coupon and prompt them to do it again
       flash.notice = "You may only enter a value for either dollar off or percent off."
       render :new
