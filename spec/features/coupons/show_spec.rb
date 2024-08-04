@@ -67,7 +67,7 @@ RSpec.describe "merchant coupons show" do
     expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
     expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
     expect(page).to have_content("Coupon Status: #{@coupon1.status}")
-    expect(page).to have_content("Times Used: #{@coupon1.percent_off}")
+    expect(page).to have_content("Times Used: #{@coupon1.times_used}")
 
     expect(page).to_not have_content("__#{@coupon2.name}__")
     expect(page).to_not have_content("Coupon Status: #{@coupon2.unique_code}")
