@@ -65,9 +65,9 @@ describe "merchant coupons new" do
 
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
 
-    fill_in "Name", with: "Twenty Dollars Off"
-    fill_in "Unique Code", with: "091JF8YMA1"
-    fill_in "Dollar Off", with: "2000"
+    fill_in :name, with: "Twenty Dollars Off"
+    fill_in :unique_code, with: "091JF8YMA1"
+    fill_in :dollar_off, with: "2000"
     
     click_button "Submit"
 
