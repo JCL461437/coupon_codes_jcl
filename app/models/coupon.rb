@@ -10,7 +10,4 @@ class Coupon < ApplicationRecord
   belongs_to :merchant
   has_many :invoices #optional: true
 
-  def self.unique_code?(code)
-    Coupon.where(unique_code: code)
-  end
 end
