@@ -15,12 +15,6 @@ class CouponsController < ApplicationController
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    @coupon = Coupon.new(name: params[:name],
-                      unique_code: params[:unique_code],
-                      dollar_off: params[:dollar_off],
-                      percent_off: params[:percent_off],
-                      merchant: @merchant)
-    binding.pry
     if params[:dollar_off].present? && params[:percent_off].present? # If user has filled information for both the dollar and percet columns it will not create a coupon and prompt them to do it again
       flash.notice = "You may only enter a value for either dollar off or percent off."
       render :new
@@ -29,10 +23,26 @@ class CouponsController < ApplicationController
       render :new
     elsif @coupon.valid?
       # use blank instead of empty due to nature of empty checking array/hash while blank will more accuratley test this
-      @coupon.save
+      if params[:dollar_off].blank?
+        Coupon.create!(name: params[:name],
+        unique_code: params[:unique_code],
+        dollar_off: 0,
+        percent_off: params[:percent_off],
+        merchant: @merchant)
+        flash.notice = 'Coupon has been created!'
+        redirect_to merchant_coupons_path(@merchant)
+      elsif params[:percent_off].blank?
+        Coupon.create!(name: params[:name],
+        unique_code: params[:unique_code],
+        dollar_off: params[:dollar_off],
+        percent_off: 0,
+        merchant: @merchant)
+        flash.notice = 'Coupon has been created!'
+        redirect_to merchant_coupons_path(@merchant)
+      end
+      redirect_to merchant_coupons_path(@merchant)
       flash.notice = 'Coupon has been created!'
       render :new
-      redirect_to merchant_coupons_path(@merchant)
     else 
       flash.notice = "That code is already assigned to a coupon. Enter a different code."
       render :new
