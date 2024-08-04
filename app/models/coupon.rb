@@ -22,11 +22,11 @@ class Coupon < ApplicationRecord
   end
 
 
-  def deactivated_coupons
-    self.where(status: 0)
+  def self.deactivated_coupons
+    Coupon.where(status: 0)
   end
 
-  def activated_coupons
-    self.where(status: 1)
+  def self.activated_coupons
+    Coupon.where(status: 1)
   end
 end
