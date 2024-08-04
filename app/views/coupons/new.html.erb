@@ -1,0 +1,29 @@
+<%= render partial: "shared/nav" %>
+
+<div class="row">
+  <div class="col-sm-6 column-header">
+  </div>
+</div>
+
+<h2>New Coupon</h2>
+<div id="new-coupon">
+  <%= form_with url: merchant_coupons_path(@merchant), method: :post, local: true do |form|%>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+    <br> 
+    <%= form.label :unique_code %>
+    <%= form.text_field :unique_code %>
+
+    <br> 
+    <%= form.label :dollar_off %>
+    <%= form.number_field :dollar_off, step: 0.1 %>
+
+    <br> 
+    <%= form.label :percent_off %>
+    <%= form.number_field :percentage_off, step: 0.01 %>
+
+    <br> 
+    <%= form.submit "Submit Application" %>
+  <% end %>
+</div>

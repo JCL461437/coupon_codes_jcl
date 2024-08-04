@@ -25,4 +25,13 @@ RSpec.describe Coupon, type: :model do
     it { should belong_to :merchant }
   end
   
+  describe "model methods" do
+    describe "class methods" do
+
+    end
+
+    describe "instance methods" do
+      
+    end
+  end
 end
