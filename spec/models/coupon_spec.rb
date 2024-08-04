@@ -83,7 +83,11 @@ RSpec.describe Coupon, type: :model do
     end
 
     describe "instance methods" do
-    
+      describe ":times_used"
+        it "should return the number of times a coupon was used for only successful transactions" do
+          # should only return three successful transactions, due to the associations between invoices who status must be completed, and transactiosn whose result must be success
+          expect(@coupon1.times_used).to eq(3) # pluck array would return "success" three times in array, but counts the number of this
+        end
     end
   end
 end
