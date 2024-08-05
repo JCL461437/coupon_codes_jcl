@@ -25,7 +25,8 @@ RSpec.describe "merchant coupons show" do
     @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: @merchant1 )
     @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
-    
+    @coupon4 = Coupon.create!(name: "Thirty Dollars Off!", unique_code: "FS56SFJ6", dollar_off: 3000, percent_off: 0, status: 0, merchant: @merchant2 )
+
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
     @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon: @coupon1)
     @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon: @coupon1 )
@@ -73,4 +74,54 @@ RSpec.describe "merchant coupons show" do
     expect(page).to_not have_content("Coupon Status: #{@coupon2.unique_code}")
   end
 
+  it "It displays the a button to deactivate an active coupon " do
+    visit merchant_coupon_path(@merchant1, @coupon1)
+
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
+
+    expect(@coupon.status).to eq("active")
+
+    expect(page).to have_content("__#{@coupon1.name}__")
+    expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
+    expect(page).to have_content("Coupon Status: #{@coupon1.status}")
+    expect(page).to have_content("Times Used: #{@coupon1.times_used}")
+
+    within "#buttons" do
+      expect(page).to have_content("Deactivate")
+      expect(page).to_not have_content("Activate")
+    
+      click_button "Deactivate" 
+    end
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
+
+    expect(@coupon.status).to eq("inactive")
+  end
+
+  it "It displays the a button to activate a inactive coupon " do
+    visit merchant_coupon_path(@merchant1, @coupon4)
+
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon4))
+
+    expect(@coupon.status).to eq("inactive")
+
+    expect(page).to have_content("__#{@coupon4.name}__")
+    expect(page).to have_content("Coupon Code #{@coupon4.unique_code}")
+    expect(page).to have_content("Dollar off $#{@coupon4.dollar_off/10}")
+    expect(page).to have_content("Percent off #{@coupon4.percent_off} %")
+    expect(page).to have_content("Coupon Status: #{@coupon4.status}")
+    expect(page).to have_content("Times Used: #{@coupon4.times_used}")
+
+    within "#buttons" do
+      expect(page).to have_content("Activate")
+      expect(page).to_not have_content("Dectivate")
+    
+      click_button "Activate" 
+    end
+    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon4))
+
+    expect(@coupon.status).to eq("active")
+
+  end
 end
