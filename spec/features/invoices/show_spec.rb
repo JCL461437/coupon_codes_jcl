@@ -21,11 +21,17 @@ RSpec.describe "invoices show" do
     @customer_4 = Customer.create!(first_name: "Leigh Ann", last_name: "Bron")
     @customer_5 = Customer.create!(first_name: "Sylvester", last_name: "Nader")
     @customer_6 = Customer.create!(first_name: "Herber", last_name: "Kuhn")
+    #merchant1
+    @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, status: 1, merchant: @merchant1 )
+    @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
+    #merchant 2
+    @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
+    @coupon4 = Coupon.create!(name: "Thirty Dollars Off!", unique_code: "FS56SFJ6", dollar_off: 3000, percent_off: 0, status: 0, merchant: @merchant2 )
 
-    @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
-    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09")
-    @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2)
-    @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2)
+    @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09", coupon: @coupon1)
+    @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09", coupon: @coupon1)
+    @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, coupon: @coupon1)
+    @invoice_4 = Invoice.create!(customer_id: @customer_3.id, status: 2, coupon: @coupon1)
     @invoice_5 = Invoice.create!(customer_id: @customer_4.id, status: 2)
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
     @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
@@ -100,4 +106,18 @@ RSpec.describe "invoices show" do
     end
   end
 
+  it "displays the subtotal for my merchant on this invoice, and then the grand total after the discount is applied" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Subtotal Revenue: #{@invoice_1.total_revenue*0.01}") # should see old total revenue without coupon
+    expect(page).to have_content("Grand Total Revenue: #{@invoice_1.coupon_total_revenue*0.01}")# should see new total revenue with the coupon
+    
+    expect(@invoice_1.coupon_total_revenue*0.01).to_not eq(@invoice_1.total_revenue*0.01)
+  end
+
+  it "I see the name and code of the coupon used as a link to that coupon's show page" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("
+  end
 end
