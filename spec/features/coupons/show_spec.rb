@@ -96,7 +96,7 @@ RSpec.describe "merchant coupons show" do
     end
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
 
-    expect(@coupon.status).to eq("inactive")
+    expect(@coupon1.status).to eq("inactive")
   end
 
   it "It displays the a button to activate a inactive coupon " do
@@ -121,7 +121,7 @@ RSpec.describe "merchant coupons show" do
     end
     expect(current_path).to eq(merchant_coupon_path(@merchant2, @coupon4))
 
-    expect(@coupon.status).to eq("active")
+    expect(@coupon4.status).to eq("active")
 
   end
 end
