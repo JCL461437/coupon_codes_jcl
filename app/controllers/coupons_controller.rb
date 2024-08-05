@@ -46,7 +46,7 @@ class CouponsController < ApplicationController
 
   def update
     @merchant = Merchant.find(params[:merchant_id])
-    @coupon = Coupon.find(params[:id])
+    @coupon = @merchant.coupons.find(params[:id])
     @coupon.update!(status: params[:status])
     flash.notice = 'Coupon Has Been Updated!'
     redirect_to merchant_coupon_path(@merchant, @coupon)
