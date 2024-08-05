@@ -83,7 +83,17 @@ RSpec.describe Coupon, type: :model do
   
   describe "model methods" do
     describe "class methods" do
+      describe "#deactivated_coupons"
+        it "should return all coupons that are deactivated" do
+          expect(Coupon.deactivated_coupons).to eq([@coupon4, @coupon5, @coupon6, @coupon7]) 
+        end
+      end
 
+      describe "#activated_coupons"
+        it "should return all coupons that are activated" do
+          expect(Coupon.activated_coupons).to eq([@coupon1, @coupon2, @coupon3])) 
+        end
+      end
     end
 
     describe "instance methods" do
@@ -93,6 +103,7 @@ RSpec.describe Coupon, type: :model do
           # and transactiosn whose result must be success. Even though their are three coupons one is associated to invoice that is not completed
           expect(@coupon1.times_used).to eq(2) # pluck array would return "success" two times in array, but counts the number of this
         end
+      end
     end
   end
 end
