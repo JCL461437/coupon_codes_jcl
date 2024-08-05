@@ -54,12 +54,13 @@ describe "merchant coupons index" do
     @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: @merchant1 )
     @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
-    @coupon4 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: merchant2 )
-    @coupon5 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant2 )
+    @coupon4 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: merchant1 )
+    @coupon5 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
     @coupon6 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant1 )
+    
     @coupon7 = Coupon.create!(name: "Five Percent Off!", unique_code: "SKLGSKD4", dollar_off: 0, percent_off: 0.05, status: 0, merchant: @merchant1 )
     @coupon8 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "92KS84JG", dollar_off: 2000, percent_off: 0, status: 0, merchant: @merchant1 )
-    @coupon9 = Coupon.create!(name: "Ten Percent Off!", unique_code: "JFKS9182", dollar_off: 0, percent_off: 0.10, status: 0, merchant: @merchant2 )
+    @coupon9 = Coupon.create!(name: "Ten Percent Off!", unique_code: "JFKS9182", dollar_off: 0, percent_off: 0.10, status: 0, merchant: @merchant1 )
     @coupon10 = Coupon.create!(name: "Thirty Dollars Off!", unique_code: "FS56SFJ6", dollar_off: 3000, percent_off: 0, status: 0, merchant: @merchant )
   end
 
@@ -72,37 +73,67 @@ describe "merchant coupons index" do
 
     expect(page).to have_current_path(merchant_coupons_path(@merchant1))
 
-
     expect(page).to have_content("#{@merchant1.name}")
     expect(page).to have_content("#{@coupon1.name}")
-    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off*10} %")
     expect(page).to have_content("#{@coupon2.name}")
-    expect(page).to have_content("Dollar off #{@coupon2.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon2.percent_off}")
+    expect(page).to have_content("Dollar off $#{@coupon2.dollar_off/10}")
+    expect(page).to have_content("Percent off #{@coupon2.percent_off*10} %")
 
     expect(page).to_not have_content("#{@coupon3.name}")
     
   end
 
-  it "when I click the name of coupon on my merchant coupon index page, then I am taken to that coupons show page" do
+  it "sorts the coupons between active and inactive coupons" do
     visit merchant_coupons_path(@merchant1)
 
+    expect(page).to have_content("Activated Coupons")
+
+    expect(page).to have_content("Deactivated Coupons")
+
     expect(page).to have_content("#{@merchant1.name}")
-    expect(page).to have_content("#{@coupon1.name}")
-    expect(page).to have_content("Dollar off #{@coupon1.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon1.percent_off}")
-    expect(page).to have_content("#{@coupon2.name}")
-    expect(page).to have_content("Dollar off #{@coupon2.dollar_off}")
-    expect(page).to have_content("Percent off #{@coupon2.percent_off}")
 
-    click_link "#{@coupon1.name}"
+    within "#activated" do
+      expect(page).to have_content("#{@coupon1.name}")
+      expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon1.percent_off*10} %")
+      expect(page).to have_content("#{@coupon2.name}")
+      expect(page).to have_content("Dollar off $#{@coupon2.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon2.percent_off} %")
+      expect(page).to have_content("#{@coupon4.name}")
+      expect(page).to have_content("Dollar off $#{@coupon4.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon4.percent_off*10} %")
+      expect(page).to have_content("#{@coupon5.name}")
+      expect(page).to have_content("Dollar off $#{@coupon5.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon5.percent_off} %")
+      expect(page).to have_content("#{@coupon6.name}")
+      expect(page).to have_content("Dollar off $#{@coupon6.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon6.percent_off} %")
 
-    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
-  
-    expect(page).to have_content("__#{@coupon1.name}__")
-    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
-    expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
+      expect(page).to_not have_content("#{@coupon1.name}")
+      expect(page).to_not have_content("Dollar off $#{@coupon1.dollar_off/10}")
+      expect(page).to_not have_content("Percent off #{@coupon1.percent_off*10} %")
+    end
+    
+    within "#deactivated" do
+      expect(page).to have_content("#{@coupon7.name}")
+      expect(page).to have_content("Dollar off $#{@coupon7.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon7.percent_off*10} %")
+      expect(page).to have_content("#{@coupon8.name}")
+      expect(page).to have_content("Dollar off $#{@coupon8.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon8.percent_off} %")
+      expect(page).to have_content("#{@coupon9.name}")
+      expect(page).to have_content("Dollar off $#{@coupon9.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon9.percent_off*10} %")
+      expect(page).to have_content("#{@coupon10.name}")
+      expect(page).to have_content("Dollar off $#{@coupon10.dollar_off/10}")
+      expect(page).to have_content("Percent off #{@coupon10.percent_off} %")
+      expect(page).to have_content("#{@coupon6.name}")
+    
+      expect(page).to_not have_content("#{@coupon1.name}")
+      expect(page).to_not have_content("Dollar off $#{@coupon1.dollar_off/10}")
+      expect(page).to_not have_content("Percent off #{@coupon1.percent_off*10} %")
+    end
   end
-
 end
