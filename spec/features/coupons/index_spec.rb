@@ -92,7 +92,7 @@ describe "merchant coupons index" do
     click_link "#{@coupon1.name}"
 
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
-    save_and_open_page
+  
     expect(page).to have_content("__#{@coupon1.name}__")
     expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
     expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
