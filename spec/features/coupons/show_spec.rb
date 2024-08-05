@@ -79,7 +79,7 @@ RSpec.describe "merchant coupons show" do
 
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
 
-    expect(@coupon.status).to eq("active")
+    expect(@coupon1.status).to eq("active")
 
     expect(page).to have_content("__#{@coupon1.name}__")
     expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
@@ -100,11 +100,11 @@ RSpec.describe "merchant coupons show" do
   end
 
   it "It displays the a button to activate a inactive coupon " do
-    visit merchant_coupon_path(@merchant1, @coupon4)
+    visit merchant_coupon_path(@merchant2, @coupon4)
 
-    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon4))
+    expect(current_path).to eq(merchant_coupon_path(@merchant2, @coupon4))
 
-    expect(@coupon.status).to eq("inactive")
+    expect(@coupon4.status).to eq("inactive")
 
     expect(page).to have_content("__#{@coupon4.name}__")
     expect(page).to have_content("Coupon Code #{@coupon4.unique_code}")
@@ -119,7 +119,7 @@ RSpec.describe "merchant coupons show" do
     
       click_button "Activate" 
     end
-    expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon4))
+    expect(current_path).to eq(merchant_coupon_path(@merchant2, @coupon4))
 
     expect(@coupon.status).to eq("active")
 

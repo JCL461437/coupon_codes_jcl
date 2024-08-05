@@ -44,6 +44,7 @@ class CouponsController < ApplicationController
     end
 
     def update
+      binding.pry
       @merchant = Merchant.find(params[:merchant_id])
       @coupon = @merchant.coupons.find(params[:id])
       @coupon.update(status: params[:status])
