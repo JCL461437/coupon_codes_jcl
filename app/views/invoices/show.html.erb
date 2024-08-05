@@ -12,7 +12,7 @@
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p> Subtotal Revenue: $<%= @invoice.total_revenue*0.01 %></p>
-  <% if @invoice.coupons.present? %>
+  <% if @invoice.coupon.present? %>
     <p> Coupon Used: <%= link_to "#{@invoice.coupon.name} #{@invoice.coupon.unique_code}", merchant_coupon_path(@merchant, @invoice.coupon)%> </p>
   <% end %>
   <p> Grand Total Revenue: $<%= @invoice.coupon_total_revenue*0.01 %></p>
