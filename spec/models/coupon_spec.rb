@@ -82,22 +82,23 @@ RSpec.describe Coupon, type: :model do
   end
   
   describe "model methods" do
+    
     describe "class methods" do
-      describe "#deactivated_coupons"
+      describe "#deactivated_coupons" do
         it "should return all coupons that are deactivated" do
           expect(Coupon.deactivated_coupons).to eq([@coupon4, @coupon5, @coupon6, @coupon7]) 
         end
       end
 
-      describe "#activated_coupons"
+      describe "#activated_coupons" do
         it "should return all coupons that are activated" do
-          expect(Coupon.activated_coupons).to eq([@coupon1, @coupon2, @coupon3])) 
+          expect(Coupon.activated_coupons).to eq([@coupon1, @coupon2, @coupon3]) 
         end
       end
     end
 
     describe "instance methods" do
-      describe ":times_used"
+      describe ":times_used" do
         it "should return the number of times a coupon was used for only successful transactions" do
           # should only return two successful transactions, due to the associations between invoices who status must be completed, 
           # and transactiosn whose result must be success. Even though their are three coupons one is associated to invoice that is not completed
