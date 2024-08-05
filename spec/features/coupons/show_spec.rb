@@ -93,7 +93,6 @@ RSpec.describe "merchant coupons show" do
       expect(page).to_not have_content("Activate")
     
       click_button "Deactivate" 
-      binding.pry
     end
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
     @coupon = Coupon.find(@coupon1.id) # syntax in similair admin/merchants/index test file? fix wierd error?
@@ -119,7 +118,6 @@ RSpec.describe "merchant coupons show" do
       expect(page).to_not have_content("Dectivate")
     
       click_button "Activate" 
-      binding.pry
     end
     expect(current_path).to eq(merchant_coupon_path(@merchant2, @coupon4))
     @coupon = Coupon.find(@coupon4.id)
