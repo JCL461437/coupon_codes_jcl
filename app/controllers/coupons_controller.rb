@@ -42,6 +42,14 @@ class CouponsController < ApplicationController
     else 
       flash.notice = "That code is already assigned to a coupon. Enter a different code."
     end
+
+    def update
+      @merchant = Merchant.find(params[:merchant_id])
+      @coupon = @merchant.coupons.find(params[:id])
+      @coupon.update(status: params[:status])
+      flash.notice = 'Merchant Has Been Updated!'
+      redirect_to merchant_coupon_path(@merchant, @coupon)
+    end
   end
 end
 
