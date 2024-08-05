@@ -15,6 +15,14 @@
         <p> Percent off <%= @coupon.percent_off*10 %> % </p>
         <p> Coupon Status: <%= @coupon.status %> </p>
         <p> Times Used: <%= @times_coupon_used %> </p>
+
+        <section id="buttons">
+          <% if @coupon.status == "inactive" %>
+            <li> <%= button_to 'Activate', merchant_coupon_path(@merchant, @coupon), method: :patch, params: {status: 'active'} %></li>
+          <% elsif @coupon.status == "active" %>
+            <li> <%= button_to 'Deactivate', merchant_coupon_path(@merchant, @coupon), method: :patch, params: {status: 'inactive'} %></li>
+          <% end %>
+        </section>
       </li>
   </ul>
 </div>
