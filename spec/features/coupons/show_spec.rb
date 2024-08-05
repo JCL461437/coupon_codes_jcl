@@ -65,7 +65,7 @@ RSpec.describe "merchant coupons show" do
 
     expect(page).to have_content("__#{@coupon1.name}__")
     expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
-    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off*0.01}")
     expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
     expect(page).to have_content("Coupon Status: #{@coupon1.status}")
     expect(page).to have_content("Times Used: #{@coupon1.times_used}")
@@ -83,7 +83,7 @@ RSpec.describe "merchant coupons show" do
 
     expect(page).to have_content("__#{@coupon1.name}__")
     expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
-    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off/10}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off*0.01}")
     expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
     expect(page).to have_content("Coupon Status: #{@coupon1.status}")
     expect(page).to have_content("Times Used: #{@coupon1.times_used}")
@@ -108,7 +108,7 @@ RSpec.describe "merchant coupons show" do
 
     expect(page).to have_content("__#{@coupon4.name}__")
     expect(page).to have_content("Coupon Code #{@coupon4.unique_code}")
-    expect(page).to have_content("Dollar off $#{@coupon4.dollar_off/10}")
+    expect(page).to have_content("Dollar off $#{@coupon4.dollar_off*0.01}")
     expect(page).to have_content("Percent off #{@coupon4.percent_off} %")
     expect(page).to have_content("Coupon Status: #{@coupon4.status}")
     expect(page).to have_content("Times Used: #{@coupon4.times_used}")

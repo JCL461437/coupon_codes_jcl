@@ -7,17 +7,37 @@
 </div>
 
 <div class="mr-auto col-sm-6 column-header">
-  <ul>
-    <% @coupons.each do |coupon| %>
-      <section id="coupon-<%= coupon.id %>">
-          <li> 
-            <p> <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %> </p>
-            <p> Dollar off <%= coupon.dollar_off %> </p>
-            <p> Percent off <%= coupon.percent_off %> </p>
-          </li>
-      </section>
-    <% end %>
-  </ul>
+  <section id="activated">
+    <h3> Activated Coupons </h3>
+    <ul>
+      <% @activated_coupons.each do |coupon| %>
+        <section id="coupon-<%= coupon.id %>">
+            <li> 
+              <p> <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %> </p>
+              <p> Dollar off $<%= coupon.dollar_off*0.01 %> </p>
+              <p> Percent off <%= coupon.percent_off*10 %> %</p>
+            </li>
+        </section>
+      <% end %>
+    </ul>
+  </section>
+</div>
+
+<div class="mr-auto col-sm-6 column-header">
+  <section id="deactivated">
+    <h3> Deactivated Coupons </h3>
+    <ul>
+      <% @deactivated_coupons.each do |coupon| %>
+        <section id="coupon-<%= coupon.id %>">
+            <li> 
+              <p> <%= link_to "#{coupon.name}", merchant_coupon_path(@merchant, coupon) %> </p>
+              <p> Dollar off $<%= coupon.dollar_off*0.01 %> </p>
+              <p> Percent off <%= coupon.percent_off*10 %> %</p>
+            </li>
+        </section>
+      <% end %>
+    </ul>
+  </section>
 </div>
 
 <%= link_to "Create A New Coupon", new_merchant_coupon_path(@merchant) %>
