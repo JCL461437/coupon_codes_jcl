@@ -44,11 +44,10 @@ class CouponsController < ApplicationController
     end
 
     def update
-      binding.pry
       @merchant = Merchant.find(params[:merchant_id])
       @coupon = @merchant.coupons.find(params[:id])
-      @coupon.update(status: params[:status])
-      flash.notice = 'Merchant Has Been Updated!'
+      @coupon.update!(status: params[:status])
+      flash.notice = 'Coupon Has Been Updated!'
       redirect_to merchant_coupon_path(@merchant, @coupon)
     end
   end
