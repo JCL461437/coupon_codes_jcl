@@ -22,7 +22,7 @@ RSpec.describe "merchant coupons show" do
     @customer_5 = Customer.create!(first_name: "Sylvester", last_name: "Nader")
     @customer_6 = Customer.create!(first_name: "Herber", last_name: "Kuhn")
     
-    @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: @merchant1 )
+    @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, status: 1, merchant: @merchant1 )
     @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
     @coupon4 = Coupon.create!(name: "Thirty Dollars Off!", unique_code: "FS56SFJ6", dollar_off: 3000, percent_off: 0, status: 0, merchant: @merchant2 )
@@ -93,10 +93,11 @@ RSpec.describe "merchant coupons show" do
       expect(page).to_not have_content("Activate")
     
       click_button "Deactivate" 
+      binding.pry
     end
     expect(current_path).to eq(merchant_coupon_path(@merchant1, @coupon1))
-
-    expect(@coupon1.status).to eq("inactive")
+    @coupon = Coupon.find(@coupon1.id) # syntax in similair admin/merchants/index test file? fix wierd error?
+    expect(@coupon.status).to eq("inactive") # why does expect(@coupon1.status).to eq("inactive") not work? 
   end
 
   it "It displays the a button to activate a inactive coupon " do
@@ -118,10 +119,11 @@ RSpec.describe "merchant coupons show" do
       expect(page).to_not have_content("Dectivate")
     
       click_button "Activate" 
+      binding.pry
     end
     expect(current_path).to eq(merchant_coupon_path(@merchant2, @coupon4))
-
-    expect(@coupon4.status).to eq("active")
+    @coupon = Coupon.find(@coupon4.id)
+    expect(@coupon.status).to eq("active")
 
   end
 end
