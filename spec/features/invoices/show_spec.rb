@@ -110,7 +110,6 @@ RSpec.describe "invoices show" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content("Subtotal Revenue: #{@invoice_1.total_revenue*0.01}") # should see old total revenue without coupon
-    expect(page).to have_content("Coupon Used: #{@coupon1.name} | #{@coupon1.unique_code}")
     expect(page).to have_content("Grand Total Revenue: #{@invoice_1.coupon_total_revenue*0.01}")# should see new total revenue with the coupon
     
     expect(@invoice_1.coupon_total_revenue*0.01).to_not eq(@invoice_1.total_revenue*0.01)
@@ -119,6 +118,20 @@ RSpec.describe "invoices show" do
   it "I see the name and code of the coupon used as a link to that coupon's show page" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(" ")
+    expect(page).to have_content("Coupon Used: #{@coupon1.name} #{@coupon1.unique_code}")
+
+    click_link " #{@coupon1.name} #{@coupon1.unique_code}"
+
+    expect(page).to have_current_path(merchant_coupon_path(@merchant1, @coupon1))
+
+    expect(page).to have_content("__#{@coupon1.name}__")
+    expect(page).to have_content("Coupon Code #{@coupon1.unique_code}")
+    expect(page).to have_content("Dollar off $#{@coupon1.dollar_off*0.01}")
+    expect(page).to have_content("Percent off #{@coupon1.percent_off} %")
+    expect(page).to have_content("Coupon Status: #{@coupon1.status}")
+    expect(page).to have_content("Times Used: #{@coupon1.times_used}")
+
+    expect(page).to_not have_content("__#{@coupon2.name}__")
+    expect(page).to_not have_content("Coupon Status: #{@coupon2.unique_code}")
   end
 end
