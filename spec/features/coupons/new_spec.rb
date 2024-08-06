@@ -68,6 +68,7 @@ describe "merchant coupons new" do
     unique_code = Faker::Number.hexadecimal(digits: 8)
     
     fill_in :name, with: "Twenty Dollars Off"
+    expect(page).to have_content("Enter either a dollar_off or percent_off value:")
     fill_in :unique_code, with: unique_code
     fill_in :dollar_off, with: "2000"
     

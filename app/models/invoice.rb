@@ -14,4 +14,15 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
+
+  def coupon_total_revenue(coupon)
+    if coupon.percent_off.blank?
+      invoice_items.sum("unit_price * quantity as subtotal")
+        .coupons.select("subtotal - coupon.dollar_off")
+    elsif coupon.dollar_off.blank?
+      invoice_items.sum("unit_price * quantity as subtotal")
+        .coupons.select("subtotal * coupon.dollar_off as percentage")
+        .select("subtotal - percentage")
+    end
+  end
 end
