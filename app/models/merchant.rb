@@ -59,4 +59,20 @@ class Merchant < ApplicationRecord
   def disabled_items
     items.where(status: 0)
   end
+
+  def merchant_coupon_revenue(coupon)
+    if coupon.percent_off.blank?
+      # invoice_items.sum("unit_price * quantity as subtotal")
+      #   .coupons.select("subtotal - coupon.dollar_off")
+
+      Coupon.where(status:1)
+    elsif coupon.dollar_off.blank?
+      # invoice_items.sum("unit_price * quantity as subtotal")
+      #   .coupons.select("subtotal * coupon.dollar_off as percentage")
+      #   .select("subtotal - percentage")
+
+      #seperate queries? Call the above and then subtract that from new query? 
+      Coupon.where(status:1)
+    end
+  end
 end
