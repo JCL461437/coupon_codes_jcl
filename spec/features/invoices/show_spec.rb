@@ -110,9 +110,9 @@ RSpec.describe "invoices show" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content("Subtotal Revenue: #{@invoice_1.total_revenue*0.01}") # should see old total revenue without coupon
-    expect(page).to have_content("Grand Total Revenue: #{@invoice_1.coupon_total_revenue*0.01}")# should see new total revenue with the coupon
+    expect(page).to have_content("Grand Total Revenue: #{@invoice_1.merchant_coupon_revenue*0.01}")# should see new total revenue with the coupon
     
-    expect(@invoice_1.coupon_total_revenue*0.01).to_not eq(@invoice_1.total_revenue*0.01)
+    expect(@invoice_1.merchant_coupon_revenue*0.01).to_not eq(@invoice_1.total_revenue*0.01)
   end
 
   it "I see the name and code of the coupon used as a link to that coupon's show page" do
