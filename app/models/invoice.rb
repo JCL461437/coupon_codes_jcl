@@ -20,7 +20,6 @@ class Invoice < ApplicationRecord
       # invoice_items.sum("unit_price * quantity as subtotal")
       #   .coupons.select("subtotal - coupon.dollar_off")
 
-      Coupon.where(status:1)
     elsif coupon.dollar_off.blank?
       # invoice_items.sum("unit_price * quantity as subtotal")
       #   .coupons.select("subtotal * coupon.dollar_off as percentage")
