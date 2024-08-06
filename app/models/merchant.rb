@@ -62,7 +62,13 @@ class Merchant < ApplicationRecord
 
   def merchant_coupon_revenue(coupon)
     if coupon.percent_off.blank?
-      self.joins(coupons: {invoices: :invoice_items}).sum("unit_price * quantity") # must join invoices and items to callculate the subtotal for each invoice by summing unit_price and quantity for all items on the invoice also allows us to access coupon details for each invoice
+      self.joins(coupons: {invoices: :invoice_items})
+      .group("invoices.id")
+      .sum("unit_price * quantity as subtotal")
+      .select("coupon.dollar_off as total_revenue")
+      .select("subtotal - total_revenue")
+      .pluck("total_revenue")
+      # must join invoices and items to callculate the subtotal for each invoice by summing unit_price and quantity for all items on the invoice also allows us to access coupon details for each invoice
     elsif coupon.dollar_off.blank?
       # invoice_items.sum("unit_price * quantity as subtotal")
       #   .coupons.select("subtotal * coupon.dollar_off as percentage")
