@@ -15,7 +15,7 @@
     <p> Subtotal Revenue: $<%= @invoice.total_revenue*0.01 %></p>
     <p> Coupon Used: <%= link_to "#{@coupon.name} #{@coupon.unique_code}", merchant_coupon_path(@merchant, @invoice.coupon)%> </p>
     <p> Grand Total Revenue: $<%= @merchant_coupon_revenue*0.01 %></p>
-  else
+  <% else %>
     <p> Total Revenue: $<%= @invoice.total_revenue*0.01 %></p>
   <% end %>
 
