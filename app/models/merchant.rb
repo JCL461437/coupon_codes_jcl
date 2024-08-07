@@ -62,20 +62,20 @@ class Merchant < ApplicationRecord
     items.where(status: 0)
   end
 
-  def merchant_coupon_revenue(coupon)
-    if coupon.percent_off.blank?
-      Invoice.joins(invoice_items: :items)
-      .group("invoices.id")
-      .select("sum(invoice_items.unit_price * invoice_items.quantity) - max(coupons.dollar_off) as total_revenue")
-      .sum("total_revenue")
-      # must join invoices and items to callculate the subtotal for each invoice by summing unit_price and quantity for all items on the invoice also allows us to access coupon details for each invoice
-    elsif coupon.dollar_off.blank?
-      # invoice_items.sum("unit_price * quantity as subtotal")
-      #   .coupons.select("subtotal * coupon.dollar_off as percentage")
-      #   .select("subtotal - percentage")
+  # def merchant_coupon_revenue(coupon)
+  #   if coupon.percent_off.blank?
+  #     Invoice.joins(invoice_items: :items)
+  #     .group("invoices.id")
+  #     .select("sum(invoice_items.unit_price * invoice_items.quantity) - max(coupons.dollar_off) as total_revenue")
+  #     .sum("total_revenue")
+  #     # must join invoices and items to callculate the subtotal for each invoice by summing unit_price and quantity for all items on the invoice also allows us to access coupon details for each invoice
+  #   elsif coupon.dollar_off.blank?
+  #     # invoice_items.sum("unit_price * quantity as subtotal")
+  #     #   .coupons.select("subtotal * coupon.dollar_off as percentage")
+  #     #   .select("subtotal - percentage")
 
-      #seperate queries? Call the above and then subtract that from new query? 
+  #     #seperate queries? Call the above and then subtract that from new query? 
 
-    end
-  end
+  #   end
+  # end
 end
