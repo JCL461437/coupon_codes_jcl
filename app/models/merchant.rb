@@ -1,7 +1,8 @@
 class Merchant < ApplicationRecord
   validates_presence_of :name
-  validates_each :coupons do |merchant, attr, value|
-    user.errors.add attr, "Too many coupons for a merchant" if merchant.coupons.size > merchant.coupons_limit
+  # validates_each :coupons do |merchant, attr, value|
+  #   user.errors.add attr, "Too many coupons for a merchant" if merchant.coupons.size > merchant.coupons_limit
+  # end
   has_many :items
   has_many :invoice_items, through: :items
   has_many :invoices, through: :invoice_items
