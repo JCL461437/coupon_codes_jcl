@@ -91,6 +91,9 @@ RSpec.describe Merchant, type: :model do
         @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
         @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Kuhn')
 
+        @coupon1 = Coupon.create!(name: "Five Dollars Off!", unique_code: "A238HFSD82", dollar_off: 500, percent_off: 0, merchant: @merchant1 )
+        @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
+
         @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
         @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-26 14:54:09")
         @invoice_3 = Invoice.create!(customer_id: @customer_2.id, status: 2, created_at: "2012-03-05 14:54:09")
@@ -147,6 +150,18 @@ RSpec.describe Merchant, type: :model do
       it "disabled_items" do 
         expect(@merchant1.disabled_items).to eq([@item_2, @item_3, @item_4, @item_7, @item_8])
         expect(@merchant2.disabled_items).to eq([@item_5, @item_6])
+      end
+
+      describe ":merchant_coupon_revenue" do
+        it "will return the total revenue for a particular merchant invoice, with the coupon discount" do
+          expect(@invoice_1.merchant_coupon_revenue(@coupon1)).to eq(95)
+        
+          expect(@invoice_1.coupon_total_revenue(@coupon1)).to_not eq(@invoice_1.total_revenue)
+
+          expect(@invoice_1.merchant_coupon_revenue(@coupon2)).to eq( )
+        
+          expect(@invoice_1.coupon_total_revenue(@coupon1)).to_not eq(@invoice_1.total_revenue)
+        end
       end
     end
   end
