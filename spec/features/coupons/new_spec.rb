@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "merchant coupons new" do
+RSpec.describe "merchant coupons new" do
   before :each do
     @merchant1 = Merchant.create!(name: "Hair Care")
     @merchant2 = Merchant.create!(name: "Jewelry")
@@ -57,19 +57,17 @@ describe "merchant coupons new" do
   end
   
   it "ensures the coupon will not be created if the code is not unique" do
-    visit merchant_coupons_path(@merchant1)
+    visit new_merchant_coupon_path(@merchant1)
 
     expect(page).to have_content("Create A New Coupon")
     
     click_link "Create A New Coupon"
 
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
-
-    unique_code = Faker::Number.hexadecimal(digits: 8)
     
     fill_in :name, with: "Twenty Dollars Off"
     expect(page).to have_content("Enter either a dollar_off or percent_off value:")
-    fill_in :unique_code, with: "A238HFSD82"
+    fill_in :unique_code, with: "A238HFSD8"
     fill_in :dollar_off, with: "2000"
     
     click_button "Submit"
@@ -79,7 +77,7 @@ describe "merchant coupons new" do
   end
 
   it "can see a link to create a new merchant coupon from the index page" do
-    visit new_merchant_coupon_path(@merchant1)
+    visit merchant_coupons_path(@merchant1)
 
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
 
