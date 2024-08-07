@@ -55,13 +55,31 @@ describe "merchant coupons new" do
     @coupon2 = Coupon.create!(name: "Five Percent Off!", unique_code: "GL12FG3FJ6", dollar_off: 0, percent_off: 0.05, merchant: @merchant1 )
     @coupon3 = Coupon.create!(name: "Twenty Dollars Off!", unique_code: "12ASFSSFJ6", dollar_off: 2000, percent_off: 0, merchant: @merchant2 )
   end
-
-  it "can see a link to create a new merchant coupon from the index page" do
+  
+  it "ensures the coupon will not be created if the code is not unique" do
     visit merchant_coupons_path(@merchant1)
 
     expect(page).to have_content("Create A New Coupon")
     
     click_link "Create A New Coupon"
+
+    expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
+
+    unique_code = Faker::Number.hexadecimal(digits: 8)
+    
+    fill_in :name, with: "Twenty Dollars Off"
+    expect(page).to have_content("Enter either a dollar_off or percent_off value:")
+    fill_in :unique_code, with: "A238HFSD82"
+    fill_in :dollar_off, with: "2000"
+    
+    click_button "Submit"
+
+    expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
+
+  end
+
+  it "can see a link to create a new merchant coupon from the index page" do
+    visit new_merchant_coupon_path(@merchant1)
 
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
 
@@ -82,5 +100,4 @@ describe "merchant coupons new" do
     expect(page).to have_content("Dollar off $#{last_coupon.dollar_off*0.01}")
     expect(page).to have_content("Percent off #{last_coupon.percent_off*10} %")
   end
-
 end
