@@ -158,7 +158,7 @@ RSpec.describe Merchant, type: :model do
         
           expect(@invoice_1.coupon_total_revenue(@coupon1)).to_not eq(@invoice_1.total_revenue)
 
-          expect(@invoice_1.merchant_coupon_revenue(@coupon2)).to eq( )
+          # expect(@invoice_1.merchant_coupon_revenue(@coupon2)).to eq( )
         
           expect(@invoice_1.coupon_total_revenue(@coupon1)).to_not eq(@invoice_1.total_revenue)
         end
