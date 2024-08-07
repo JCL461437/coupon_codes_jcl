@@ -65,12 +65,17 @@ class Merchant < ApplicationRecord
 
   def merchant_coupon_revenue(coupon)
     if coupon.percent_off.blank?
-      
-      
-      Invoice.joins(invoice_item: :items)
+      Invoice.joins(invoice_items: :item)
+      .joins(:coupon)
       .group("invoices.id")
-      .select("sum(invoice_items.unit_price * invoice_items.quantity) - max(coupons.dollar_off) as total_revenue")
-      .select("sum(total_revenue)")
+      .select("invoices.id, sum(invoice_items.unit_price * invoice_items.quantity) - (max(coupons.dollar_off)) as total_revenue")
+      
+      # having invoices.id tells us which invoice our total_revenue corresponds to. Important for our aggregate functions to know within context of our group statement
+
+      # Invoice.joins(invoice_item: :items)
+      # .group("invoices.id")
+      # .select("sum(invoice_items.unit_price * invoice_items.quantity) - max(coupons.dollar_off) as total_revenue")
+      # .select("sum(total_revenue)")
 
       # must join invoices and items to callculate the subtotal for each invoice by summing unit_price and quantity for all items on the invoice also allows us to access coupon details for each invoice
     elsif coupon.dollar_off.blank?
