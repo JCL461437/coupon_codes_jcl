@@ -11,7 +11,7 @@ RSpec.describe "invoices show" do
     @item_4 = Item.create!(name: "Hair tie", description: "This holds up your hair", unit_price: 1, merchant_id: @merchant1.id)
     @item_7 = Item.create!(name: "Scrunchie", description: "This holds up your hair but is bigger", unit_price: 3, merchant_id: @merchant1.id)
     @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
-
+    # merchant 2 
     @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
     @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
 
@@ -113,6 +113,22 @@ RSpec.describe "invoices show" do
     expect(page).to have_content("Grand Total Revenue: #{@invoice_1.merchant_coupon_revenue*0.01}")# should see new total revenue with the coupon
     
     expect(@invoice_1.merchant_coupon_revenue*0.01).to_not eq(@invoice_1.total_revenue*0.01)
+  end
+
+  it "displays grand total with coupon info only if coupon was used for a merchant" do
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Subtotal Revenue: #{@invoice_1.total_revenue*0.01}") # should see old total revenue without coupon
+    expect(page).to have_content("Grand Total Revenue: #{@invoice_1.merchant_coupon_revenue*0.01}")# should see new total revenue with the coupon
+    expect(page).to_not have_content("Total Revenue: #{@invoice_8.total_revenue*0.01}")
+
+    expect(@invoice_1.merchant_coupon_revenue*0.01).to_not eq(@invoice_1.total_revenue*0.01)
+
+    visit merchant_invoice_path(@merchant2, @invoice_8)
+
+    expect(page).to have_content("Total Revenue: #{@invoice_8.total_revenue*0.01}") # should see old total revenue without coupon
+    expect(page).to_not have_content("Subtotal Revenue: #{@invoice_1.total_revenue*0.01}")
+    expect(page).to_not have_content("Grand Total Revenue: #{@invoice_1.merchant_coupon_revenue*0.01}")
   end
 
   it "I see the name and code of the coupon used as a link to that coupon's show page" do
