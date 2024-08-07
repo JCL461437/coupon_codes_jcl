@@ -68,7 +68,8 @@ class Merchant < ApplicationRecord
       Invoice.joins(invoice_items: :item)
       .joins(:coupon)
       .group("invoices.id")
-      .select("invoices.id, sum(invoice_items.unit_price * invoice_items.quantity) - (max(coupons.dollar_off)) as total_revenue")
+      .select("invoices.id, sum(invoice_items.unit_price * invoice_items.quantity) - 
+        (max(coupons.dollar_off)) as total_revenue")
       
       # having invoices.id tells us which invoice our total_revenue corresponds to. Important for our aggregate functions to know within context of our group statement
 
@@ -79,12 +80,17 @@ class Merchant < ApplicationRecord
 
       # must join invoices and items to callculate the subtotal for each invoice by summing unit_price and quantity for all items on the invoice also allows us to access coupon details for each invoice
     elsif coupon.dollar_off.blank?
+      Invoice.joins(invoice_items: :item)
+      .joins(:coupon)
+      .group("invoices.id")
+      .select("invoices.id, 
+      sum(invoice_items.unit_price * invoice_items.quantity) - 
+      (sum(invoice_items.unit_price * invoice_items.quantity) * coalesce(max(coupons.percent_off), 0) / 100) as total_revenue")
       # invoice_items.sum("unit_price * quantity as subtotal")
       #   .coupons.select("subtotal * coupon.dollar_off as percentage")
       #   .select("subtotal - percentage")
 
       #seperate queries? Call the above and then subtract that from new query? 
-
     end
   end
 end
