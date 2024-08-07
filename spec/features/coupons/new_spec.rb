@@ -59,10 +59,6 @@ RSpec.describe "merchant coupons new" do
   it "ensures the coupon will not be created if the code is not unique" do
     visit new_merchant_coupon_path(@merchant1)
 
-    expect(page).to have_content("Create A New Coupon")
-    
-    click_link "Create A New Coupon"
-
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
     
     fill_in :name, with: "Twenty Dollars Off"
@@ -78,6 +74,10 @@ RSpec.describe "merchant coupons new" do
 
   it "can see a link to create a new merchant coupon from the index page" do
     visit merchant_coupons_path(@merchant1)
+
+    expect(page).to have_content("Create A New Coupon")
+    
+    click_link "Create A New Coupon"
 
     expect(page).to have_current_path(new_merchant_coupon_path(@merchant1))
 
